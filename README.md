@@ -31,14 +31,14 @@ FinWallet is a simulated digital wallet application that allows registered users
 ## Project Structure
 
 finwallet/
-    docs/
-        requirements/
-        diagrams/
-        database/
-        api/
-    finwallet-backend/
-    finwallet-frontend/
-    README.md
+├── docs/
+│   ├── requirements/
+│   ├── diagrams/
+│   ├── database/
+│   └── api/
+├── finwallet-backend/
+├── finwallet-frontend/
+└── README.md
 
 ## Project Status
 
