@@ -1,0 +1,28 @@
+flowchart TB
+    Guest(["Guest"])
+    User(["Registered User"])
+
+    subgraph FW["FINWALLET SYSTEM"]
+        UC1(["UC-01 Register Account"])
+        UC2(["UC-02 Login"])
+        UC3(["UC-03 View and Update Profile"])
+        UC4(["UC-04 Change Password"])
+        UC5(["UC-05 View Wallet Balance and Status"])
+        UC6(["UC-06 Top Up Wallet"])
+        UC7(["UC-07 Transfer Funds"])
+        UC8(["UC-08 Record Payment / Expense"])
+        UC9(["UC-09 View Transaction History and Detail"])
+    end
+
+    Guest --- UC1
+    Guest --- UC2
+
+    User --- UC3
+    User --- UC4
+    User --- UC5
+    User --- UC6
+    User --- UC7
+    User --- UC8
+    User --- UC9
+
+    style FW fill:#EAF2FF,stroke:#3973AC,stroke-width:2px,color:#172B4D
