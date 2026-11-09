@@ -1,0 +1,44 @@
+flowchart TD
+    Start([Start])
+    OpenPage[User opens login page]
+    InputData[User enters phone number and password]
+    Submit[User submits login form]
+
+    Validate{Are phone number and password provided?}
+    ErrorInput[Display input validation error]
+
+    FindUser[System searches user by phone number]
+    UserExists{Does user exist?}
+    VerifyPassword[System verifies password using password hash]
+    PasswordValid{Is password correct?}
+
+    GenerateToken[System generates JWT access token]
+    ReturnToken[System returns authentication response and JWT token]
+    Success[User successfully logged in]
+
+    ErrorCredential[Display invalid phone number or password]
+    End([End])
+
+    Start --> OpenPage
+    OpenPage --> InputData
+    InputData --> Submit
+    Submit --> Validate
+
+    Validate -- No --> ErrorInput
+    ErrorInput --> InputData
+
+    Validate -- Yes --> FindUser
+    FindUser --> UserExists
+
+    UserExists -- No --> ErrorCredential
+    UserExists -- Yes --> VerifyPassword
+
+    VerifyPassword --> PasswordValid
+    PasswordValid -- No --> ErrorCredential
+    PasswordValid -- Yes --> GenerateToken
+
+    GenerateToken --> ReturnToken
+    ReturnToken --> Success
+    Success --> End
+
+    ErrorCredential --> InputData
