@@ -1,0 +1,55 @@
+flowchart TD
+    Start([Start])
+    OpenPage[User opens Top Up page]
+    ViewWallet[System retrieves user's wallet]
+    CheckStatus{Is wallet ACTIVE?}
+
+    ErrorStatus[Display wallet status error]
+    InputAmount[User enters Top Up amount]
+    Submit[User submits Top Up request]
+
+    Validate{Is amount valid and greater than zero?}
+    ErrorAmount[Display invalid amount error]
+
+    BeginTransaction[Begin database transaction]
+    GenerateReference[System generates unique transaction reference]
+    UpdateBalance[System increases wallet balance]
+    CreateTransaction[System creates TOP_UP transaction record]
+    SaveData[(Save wallet and transaction data)]
+    Commit[Commit database transaction]
+
+    Success[Display Top Up success and updated balance]
+
+    Rollback[Rollback database transaction]
+    ErrorSystem[Display Top Up failure message]
+
+    End([End])
+
+    Start --> OpenPage
+    OpenPage --> ViewWallet
+    ViewWallet --> CheckStatus
+
+    CheckStatus -- No --> ErrorStatus
+    ErrorStatus --> End
+
+    CheckStatus -- Yes --> InputAmount
+    InputAmount --> Submit
+    Submit --> Validate
+
+    Validate -- No --> ErrorAmount
+    ErrorAmount --> InputAmount
+
+    Validate -- Yes --> BeginTransaction
+    BeginTransaction --> GenerateReference
+    GenerateReference --> UpdateBalance
+    UpdateBalance --> CreateTransaction
+    CreateTransaction --> SaveData
+    SaveData --> Commit
+    Commit --> Success
+    Success --> End
+
+    UpdateBalance -. Database error .-> Rollback
+    CreateTransaction -. Database error .-> Rollback
+    SaveData -. Database error .-> Rollback
+    Rollback --> ErrorSystem
+    ErrorSystem --> End
