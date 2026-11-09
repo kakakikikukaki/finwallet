@@ -1,0 +1,37 @@
+flowchart TD
+    Start([Start])
+    OpenPage[User opens registration page]
+    InputData[User enters name, phone number, password, and transaction PIN]
+    Submit[User submits registration form]
+    Validate{Are all input fields valid?}
+    CheckPhone[System checks phone number availability]
+    PhoneExists{Is phone number already registered?}
+    HashPassword[System hashes password and transaction PIN]
+    CreateUser[System creates user account]
+    CreateWallet[System creates wallet with ACTIVE status and IDR 0 balance]
+    SaveData[(Save user and wallet data)]
+    Success[Display registration success]
+    ErrorInput[Display input validation error]
+    ErrorPhone[Display phone number already registered]
+    End([End])
+
+    Start --> OpenPage
+    OpenPage --> InputData
+    InputData --> Submit
+    Submit --> Validate
+
+    Validate -- No --> ErrorInput
+    ErrorInput --> InputData
+
+    Validate -- Yes --> CheckPhone
+    CheckPhone --> PhoneExists
+
+    PhoneExists -- Yes --> ErrorPhone
+    ErrorPhone --> InputData
+
+    PhoneExists -- No --> HashPassword
+    HashPassword --> CreateUser
+    CreateUser --> CreateWallet
+    CreateWallet --> SaveData
+    SaveData --> Success
+    Success --> End
