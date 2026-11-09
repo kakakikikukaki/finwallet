@@ -1,0 +1,118 @@
+flowchart TD
+    Start([Start])
+    OpenPage[User opens Transfer page]
+    InputRecipient[User enters recipient phone number]
+    InputAmount[User enters transfer amount]
+    InputPIN[User enters transaction PIN]
+    Submit[User submits transfer request]
+
+    ValidateInput{Are all input fields valid?}
+    ErrorInput[Display input validation error]
+
+    FindRecipient[System searches recipient by phone number]
+    RecipientExists{Does recipient exist?}
+    ErrorRecipient[Display recipient not found]
+
+    GetWallets[System retrieves sender and recipient wallets]
+    CheckSenderStatus{Is sender wallet ACTIVE?}
+    CheckRecipientStatus{Is recipient wallet ACTIVE?}
+
+    ErrorSenderStatus[Display sender wallet status error]
+    ErrorRecipientStatus[Display recipient wallet status error]
+
+    VerifyPIN[System verifies transaction PIN]
+    PINValid{Is transaction PIN correct?}
+    ErrorPIN[Display invalid transaction PIN]
+
+    CheckAmount{Is amount greater than zero?}
+    ErrorAmount[Display invalid transfer amount]
+
+    CheckBalance{Is sender balance sufficient?}
+    ErrorBalance[Display insufficient balance]
+
+    BeginTransaction[Begin database transaction]
+    LockWallets[Lock sender and recipient wallets]
+    RecheckBalance[System rechecks sender balance]
+    BalanceValid{Is balance still sufficient?}
+
+    GenerateReference[Generate unique transfer reference]
+    DebitSender[Deduct amount from sender wallet]
+    CreditRecipient[Add amount to recipient wallet]
+    CreateDebit[Create sender DEBIT transaction]
+    CreateCredit[Create recipient CREDIT transaction]
+    SaveData[(Save both wallets and transaction records)]
+    Commit[Commit database transaction]
+
+    Success[Display transfer success and updated balance]
+    Rollback[Rollback database transaction]
+    ErrorSystem[Display transfer failure message]
+
+    End([End])
+
+    Start --> OpenPage
+    OpenPage --> InputRecipient
+    InputRecipient --> InputAmount
+    InputAmount --> InputPIN
+    InputPIN --> Submit
+    Submit --> ValidateInput
+
+    ValidateInput -- No --> ErrorInput
+    ErrorInput --> InputRecipient
+
+    ValidateInput -- Yes --> FindRecipient
+    FindRecipient --> RecipientExists
+
+    RecipientExists -- No --> ErrorRecipient
+    ErrorRecipient --> InputRecipient
+
+    RecipientExists -- Yes --> GetWallets
+    GetWallets --> CheckSenderStatus
+
+    CheckSenderStatus -- No --> ErrorSenderStatus
+    ErrorSenderStatus --> End
+
+    CheckSenderStatus -- Yes --> CheckRecipientStatus
+    CheckRecipientStatus -- No --> ErrorRecipientStatus
+    ErrorRecipientStatus --> End
+
+    CheckRecipientStatus -- Yes --> VerifyPIN
+    VerifyPIN --> PINValid
+
+    PINValid -- No --> ErrorPIN
+    ErrorPIN --> InputPIN
+
+    PINValid -- Yes --> CheckAmount
+    CheckAmount -- No --> ErrorAmount
+    ErrorAmount --> InputAmount
+
+    CheckAmount -- Yes --> CheckBalance
+    CheckBalance -- No --> ErrorBalance
+    ErrorBalance --> End
+
+    CheckBalance -- Yes --> BeginTransaction
+    BeginTransaction --> LockWallets
+    LockWallets --> RecheckBalance
+    RecheckBalance --> BalanceValid
+
+    BalanceValid -- No --> Rollback
+    BalanceValid -- Yes --> GenerateReference
+
+    GenerateReference --> DebitSender
+    DebitSender --> CreditRecipient
+    CreditRecipient --> CreateDebit
+    CreateDebit --> CreateCredit
+    CreateCredit --> SaveData
+    SaveData --> Commit
+
+    Commit --> Success
+    Success --> End
+
+    LockWallets -. Database error .-> Rollback
+    DebitSender -. Database error .-> Rollback
+    CreditRecipient -. Database error .-> Rollback
+    CreateDebit -. Database error .-> Rollback
+    CreateCredit -. Database error .-> Rollback
+    SaveData -. Database error .-> Rollback
+
+    Rollback --> ErrorSystem
+    ErrorSystem --> End
