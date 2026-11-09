@@ -1,0 +1,89 @@
+flowchart TD
+    Start([Start])
+    OpenPage[User opens Payment / Expense page]
+    GetWallet[System retrieves user's wallet]
+    CheckStatus{Is wallet ACTIVE?}
+
+    ErrorStatus[Display wallet status error]
+
+    InputData[User enters amount, category, and optional description]
+    InputPIN[User enters transaction PIN]
+    Submit[User submits payment request]
+
+    ValidateInput{Are all input fields valid?}
+    ErrorInput[Display input validation error]
+
+    VerifyPIN[System verifies transaction PIN]
+    PINValid{Is transaction PIN correct?}
+    ErrorPIN[Display invalid transaction PIN]
+
+    CheckBalance{Is wallet balance sufficient?}
+    ErrorBalance[Display insufficient balance]
+
+    BeginTransaction[Begin database transaction]
+    LockWallet[Lock user's wallet]
+    RecheckBalance[System rechecks wallet balance]
+    BalanceValid{Is balance still sufficient?}
+
+    GenerateReference[System generates unique transaction reference]
+    DeductBalance[System deducts payment amount from wallet]
+    CreateTransaction[System creates PAYMENT transaction record]
+    SaveData[(Save wallet and transaction data)]
+    Commit[Commit database transaction]
+
+    Success[Display payment success and updated balance]
+
+    Rollback[Rollback database transaction]
+    ErrorSystem[Display payment failure message]
+
+    End([End])
+
+    Start --> OpenPage
+    OpenPage --> GetWallet
+    GetWallet --> CheckStatus
+
+    CheckStatus -- No --> ErrorStatus
+    ErrorStatus --> End
+
+    CheckStatus -- Yes --> InputData
+    InputData --> InputPIN
+    InputPIN --> Submit
+    Submit --> ValidateInput
+
+    ValidateInput -- No --> ErrorInput
+    ErrorInput --> InputData
+
+    ValidateInput -- Yes --> VerifyPIN
+    VerifyPIN --> PINValid
+
+    PINValid -- No --> ErrorPIN
+    ErrorPIN --> InputPIN
+
+    PINValid -- Yes --> CheckBalance
+
+    CheckBalance -- No --> ErrorBalance
+    ErrorBalance --> End
+
+    CheckBalance -- Yes --> BeginTransaction
+    BeginTransaction --> LockWallet
+    LockWallet --> RecheckBalance
+    RecheckBalance --> BalanceValid
+
+    BalanceValid -- No --> Rollback
+    BalanceValid -- Yes --> GenerateReference
+
+    GenerateReference --> DeductBalance
+    DeductBalance --> CreateTransaction
+    CreateTransaction --> SaveData
+    SaveData --> Commit
+
+    Commit --> Success
+    Success --> End
+
+    LockWallet -. Database error .-> Rollback
+    DeductBalance -. Database error .-> Rollback
+    CreateTransaction -. Database error .-> Rollback
+    SaveData -. Database error .-> Rollback
+
+    Rollback --> ErrorSystem
+    ErrorSystem --> End
