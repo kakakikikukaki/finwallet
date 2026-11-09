@@ -3,16 +3,27 @@ flowchart TD
     OpenPage[User opens registration page]
     InputData[User enters name, phone number, password, and transaction PIN]
     Submit[User submits registration form]
+
     Validate{Are all input fields valid?}
+    ErrorInput[Display input validation error]
+
     CheckPhone[System checks phone number availability]
     PhoneExists{Is phone number already registered?}
+    ErrorPhone[Display phone number already registered]
+
     HashPassword[System hashes password and transaction PIN]
+
+    BeginTransaction[Begin database transaction]
     CreateUser[System creates user account]
     CreateWallet[System creates wallet with ACTIVE status and IDR 0 balance]
     SaveData[(Save user and wallet data)]
+    Commit[Commit database transaction]
+
     Success[Display registration success]
-    ErrorInput[Display input validation error]
-    ErrorPhone[Display phone number already registered]
+
+    Rollback[Rollback database transaction]
+    ErrorSystem[Display registration failure message]
+
     End([End])
 
     Start --> OpenPage
@@ -30,8 +41,16 @@ flowchart TD
     ErrorPhone --> InputData
 
     PhoneExists -- No --> HashPassword
-    HashPassword --> CreateUser
+    HashPassword --> BeginTransaction
+    BeginTransaction --> CreateUser
     CreateUser --> CreateWallet
     CreateWallet --> SaveData
-    SaveData --> Success
+    SaveData --> Commit
+    Commit --> Success
     Success --> End
+
+    CreateUser -. Database error .-> Rollback
+    CreateWallet -. Database error .-> Rollback
+    SaveData -. Database error .-> Rollback
+    Rollback --> ErrorSystem
+    ErrorSystem --> End
