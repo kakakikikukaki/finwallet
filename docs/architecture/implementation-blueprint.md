@@ -1,9 +1,16 @@
 # FinWallet Implementation Blueprint
 
-**Document Version:** 1.0  
+**Document Version:** 1.1  
 **Project:** FinWallet  
-**Backend:** Java 21, Spring Boot 3, PostgreSQL  
+**Backend:** Java 21, Spring Boot 4, PostgreSQL  
 **Architecture:** Layered Architecture
+
+## Revision History
+
+| Version | Date | Description |
+|---|---|---|
+| 1.0 | Initial release | Initial document version |
+| 1.1 | 2026-11-10 | Updated technology stack to Spring Boot 4.1.2 and revised technical specifications |
 
 ## 1. Implementation Objective
 
@@ -46,7 +53,7 @@ Implementasi dilakukan secara bertahap. Setiap tahap harus selesai dan diuji seb
 | spring-security-test | Security testing |
 | testcontainers-postgresql | PostgreSQL integration testing |
 
-Use a consistent JJWT version for all three JJWT modules. Use the dependency versions managed by the selected Spring Boot 3 release where available.
+Use a consistent JJWT version for all three JJWT modules. Use the dependency versions managed by the selected Spring Boot 4 release where available.
 
 ## 4. Application Configuration
 

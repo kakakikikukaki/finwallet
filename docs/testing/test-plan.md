@@ -1,11 +1,18 @@
 # FinWallet — Test Plan
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Application:** FinWallet Backend REST API  
 **Testing Type:** Functional, Validation, Security, Integration, and Concurrency Testing  
 **Database:** PostgreSQL
 
 ---
+
+## Revision History
+
+| Version | Date | Description |
+|---|---|---|
+| 1.0 | Initial release | Initial document version |
+| 1.1 | 2026-11-10 | Updated technology stack to Spring Boot 4.1.2 and revised technical specifications |
 
 ## 1. Testing Objectives
 
@@ -54,7 +61,7 @@ Pengujian bertujuan memastikan bahwa:
 | Component | Configuration |
 |---|---|
 | Java | Java 21 |
-| Framework | Spring Boot 3 |
+| Framework | Spring Boot 4 |
 | Database | PostgreSQL |
 | Security | Spring Security + JWT |
 | ORM | Spring Data JPA / Hibernate |

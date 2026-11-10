@@ -1,7 +1,14 @@
 # FinWallet Documentation Review
 
-**Document Version:** 1.0  
+**Document Version:** 1.1  
 **Review Scope:** Requirements, Use Cases, Diagrams, Database, API, Security, Testing, and Architecture.
+
+## Revision History
+
+| Version | Date | Description |
+|---|---|---|
+| 1.0 | Initial release | Initial document version |
+| 1.1 | 2026-11-10 | Updated technology stack to Spring Boot 4.1.2 and revised technical specifications |
 
 ## 1. Review Objective
 
@@ -139,7 +146,7 @@ Entities must not be exposed directly through API responses. Use DTOs.
 ## 8. Technical Standards
 
 - Java 21.
-- Spring Boot 3.
+- Spring Boot 4.
 - PostgreSQL.
 - Spring Data JPA / Hibernate.
 - Spring Security.

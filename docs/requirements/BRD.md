@@ -274,7 +274,7 @@ The MVP will be considered successful when:
 - Each user owns exactly one FinWallet wallet.
 - The application uses Indonesian Rupiah (IDR).
 - PostgreSQL is used as the primary database.
-- The backend is developed using Java 21 and Spring Boot 3.
+- The backend is developed using Java 21 and Spring Boot 4.
 - The frontend is developed using Angular.
 - The system initially targets an MVP implementation.
 

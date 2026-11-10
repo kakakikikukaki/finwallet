@@ -20,7 +20,7 @@ FinWallet is a simulated digital wallet application that allows registered users
 
 | Component | Technology |
 |---|---|
-| Backend | Java 21, Spring Boot 3 |
+| Backend | Java 21, Spring Boot 4 |
 | Database | PostgreSQL |
 | ORM | Spring Data JPA / Hibernate |
 | Security | Spring Security, JWT |

@@ -1,8 +1,15 @@
 # FinWallet Backend Architecture
 
-**Document Version:** 1.0  
+**Document Version:** 1.1  
 **Project:** FinWallet  
-**Backend Stack:** Java 21, Spring Boot 3, PostgreSQL, Spring Security, JWT, Spring Data JPA
+**Backend Stack:** Java 21, Spring Boot 4, PostgreSQL, Spring Security, JWT, Spring Data JPA
+
+## Revision History
+
+| Version | Date | Description |
+|---|---|---|
+| 1.0 | Initial release | Initial document version |
+| 1.1 | 2026-11-10 | Updated technology stack to Spring Boot 4.1.2 and revised technical specifications |
 
 ## 1. Architecture Overview
 

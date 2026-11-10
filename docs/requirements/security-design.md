@@ -1,13 +1,20 @@
 # FinWallet — Security Design
 
-**Version:** 1.0  
-**Backend:** Java 21 + Spring Boot 3  
+**Version:** 1.1  
+**Backend:** Java 21 + Spring Boot 4  
 **Security Framework:** Spring Security  
 **Authentication:** JWT  
 **Password Hashing:** BCrypt  
 **Database:** PostgreSQL
 
 ---
+
+## Revision History
+
+| Version | Date | Description |
+|---|---|---|
+| 1.0 | Initial release | Initial document version |
+| 1.1 | 2026-11-10 | Updated technology stack to Spring Boot 4.1.2 and revised technical specifications |
 
 ## 1. Security Objectives
 
