@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: finwallet-backend
+
+  profiles:
+    active: dev
